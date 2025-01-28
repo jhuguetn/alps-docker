@@ -5,7 +5,7 @@ https://github.com/jhuguetn/alps-docker/releases)
 https://hub.docker.com/r/jhuguetn/alps/tags)  
 ===========
 Ready-to-use Docker image with `ALPS` script that automatically computes the diffusion 
-along perivascular spaces (ALPS) metric from diffusion-weighted images (DWI). ALPS  
+along perivascular spaces (ALPS) metric from diffusion-weighted images (DWI). ALPS 
 script repository: https://github.com/gbarisano/alps/.
 
 References:  
