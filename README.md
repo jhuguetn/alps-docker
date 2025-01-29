@@ -21,13 +21,22 @@ Components
 * FSL 6.0.7.7 ("[minified](https://osf.io/ph9ex)" version)
 * MRtrix3 3.0.4
 
-Usage
------
+Usage (full workflow)
+---------------------
 ```bash
  docker pull jhuguetn/alps
  ...
  docker run -v /data:/data jhuguetn/alps -a /data/in/dwi.nii.gz -m /data/in/dwi.json \   
  -b /data/in/dwi.bval -c /data/in/dwi.bvec -i /data/in/rdwi.nii.gz -n /data/in/rdwi.json \
+ -v /data/in/t1.nii.gz -o /data/out
+```
+
+Usage (minimal workflow)
+------------------------
+```bash
+ docker pull jhuguetn/alps
+ ...
+ docker run -v /data:/data jhuguetn/alps -d 0 -e 0 -h 1 -s 1 \
  -v /data/in/t1.nii.gz -o /data/out
 ```
 
