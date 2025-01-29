@@ -15,24 +15,25 @@ FROM mrtrix AS final
 COPY --from=fsl-installer /opt/fsl /opt/fsl
 WORKDIR /tmp
 
-ENV LD_LIBRARY_PATH="/opt/ants/lib:/opt/fsl/lib" \
-    PATH="/opt/alps:/opt/fsl/bin:/opt/mrtrix3/bin:/opt/ants/bin:/opt/art/bin:/opt/fsl/share/fsl/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+ENV OMP_NUM_THREADS=4 \
+    LD_LIBRARY_PATH="/opt/ants/lib:/opt/fsl/lib" \
+    PATH="/opt/mrtrix3/bin:/opt/ants/bin:/opt/art/bin:/opt/fsl/share/fsl/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 MAINTAINER Jordi Huguet <jhuguet@barcelonabeta.org>
 LABEL description="DTI-ALPS / MRtrix3 3.0.4 / FSL 6.0.7.7 docker image"
 LABEL maintainer="jhuguet@barcelonabeta.org"
 
-ENV ALPS_REPO_VERSION b212e4c
-ENV ALPS_VERSION ${ALPS_REPO_VERSION}
+ENV ALPS_VERSION=bbrc-0.1
+ENV ALPS_DIR=/opt/alps
 
 # install Git, alps, FSL atlases and dependencies
 RUN apt-get update \
  && apt-get install -y nano git git-lfs bc \
  && apt-get clean \
- && git clone -b main https://github.com/gbarisano/alps.git /opt/alps \
- && chmod +x /opt/alps/alps.sh \
- && cd /opt/alps \
- && git checkout ${ALPS_REPO_VERSION} \
+ && git clone -b bbrc https://github.com/jhuguetn/alps.git ${ALPS_DIR} \
+ && cd ${ALPS_DIR} \
+ && git checkout ${ALPS_VERSION} \
+ && chmod +x ${ALPS_DIR}/alps.sh \
  && git clone https://git.fmrib.ox.ac.uk/fsl/data_atlases.git /tmp/atlases \
  && mkdir -p /opt/fsl/data/atlases \
  && cp -r /tmp/atlases/JHU* /opt/fsl/data/atlases/ \
@@ -41,6 +42,9 @@ RUN apt-get update \
 # install Python3 packages
 #RUN pip3 install --no-cache-dir \
 # 'bbrc-pyxnat==1.6.3.dev1'
+
+# append ALPS and FSL binaries to system PATH
+ENV PATH="${PATH}:/opt/alps:/opt/fsl/bin"
 
 # copy scripts and run.sh entrypoint
 #COPY scripts /tmp/scripts
