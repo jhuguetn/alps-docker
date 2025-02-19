@@ -37,7 +37,10 @@ RUN apt-get update \
  && git clone https://git.fmrib.ox.ac.uk/fsl/data_atlases.git /tmp/atlases \
  && mkdir -p /opt/fsl/data/atlases \
  && cp -r /tmp/atlases/JHU* /opt/fsl/data/atlases/ \
- && rm -rf /tmp/atlases
+ && rm -rf /tmp/atlases \
+ && git clone https://git.fmrib.ox.ac.uk/fsl/flirt.git /tmp/flirt \
+ && cp -r /tmp/flirt/flirtsch/* /opt/fsl/etc/flirtsch/ \
+ && rm -rf /tmp/flirt
 
 # install Python3 packages
 #RUN pip3 install --no-cache-dir \
