@@ -41,6 +41,9 @@ RUN apt-get update \
  && git clone https://git.fmrib.ox.ac.uk/fsl/flirt.git /tmp/flirt \
  && cp -r /tmp/flirt/flirtsch/* /opt/fsl/etc/flirtsch/ \
  && rm -rf /tmp/flirt
+ && git clone https://git.fmrib.ox.ac.uk/fsl/data_standard.git /tmp/data_standard \
+ && cp -r /tmp/data_standard/MNI152_T1_2mm* /opt/fsl/data/standard/ \
+ && rm -rf /tmp/data_standard
 
 # install Python3 packages
 #RUN pip3 install --no-cache-dir \
